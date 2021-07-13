@@ -52,11 +52,51 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message = text=event.message.text
+    def handle_message(event):
+    message = text=event.message.text
     if re.match('告訴我秘密',message):
         # Flex Message Simulator網頁：https://developers.line.biz/console/fx/
         flex_message = FlexSendMessage(
             alt_text='行銷搬進大程式',
             contents={...} #json貼在這裡
+        )
+        line_bot_api.reply_message(event.reply_token, flex_message)
+        
+    if re.match('預約',message):
+        # Flex Message Simulator網頁：https://developers.line.biz/console/fx/
+        flex_message = FlexSendMessage(
+            alt_text='行銷搬進大程式',
+            contents={
+  "type": "template",
+  "altText": "this is a buttons template",
+  "template": {
+    "type": "buttons",
+    "title": "Select the Reservation time",
+    "text": "Last Order : PM 9:00",
+    "actions": [
+      {
+        "type": "message",
+        "label": "PM 6:00",
+        "text": "PM 6:00"
+      },
+      {
+        "type": "message",
+        "label": "PM 7:00",
+        "text": "PM 7:00"
+      },
+      {
+        "type": "message",
+        "label": "PM 8:00",
+        "text": "PM 8:00"
+      },
+      {
+        "type": "message",
+        "label": "PM 9:00",
+        "text": "PM 9:00"
+      }
+    ]
+  }
+}
         )
         line_bot_api.reply_message(event.reply_token, flex_message)
     else:
